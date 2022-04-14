@@ -1,0 +1,22 @@
+# 강의 내용 및 순서 / Agenda
+
+2022.04.14
+이선우
+
+### 순서
+1. 라즈베리파이 피코 보드 소개
+  - 공식 문서 페이지 [Raspberry Pi Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
+  - [RP2040 MCU](https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html#welcome-to-rp2040)
+
+2. 소프트웨어 개발 환경 소개
+  - C/C++을 사용하여 소프트웨어를 개발하는 방법에 대한 [안내서](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf)
+  - 파이썬 언어를 사용하는 방법
+    - [Micro Python 소개](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#what-is-micropython)
+    - RP2를 위한 Micro Python 사용 환경 관련 [안내서](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf)
+
+3. Micro Python 사용 환경 만들기 실습
+ - [따라하며 설치하기](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
+4. 보드 위 LED 제어하기 실습
+5. 외부 LED 및 세그먼트 제어하기 실습
+6. 스위치 사용 실습
+7. 1자리수 카운터 만들기 실습
