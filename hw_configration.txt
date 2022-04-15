@@ -1,0 +1,22 @@
+데모 하드웨어 연결 정보
+
+PICO        다른 부품
+-------------------
+GP0         UP switch
+GP1         DOWN switch
+
+#FND
+GP13        DIG1 (맨 앞자리)/12
+GP12        DIG2 (2번째 자리)/9
+GP11        DIG3 (3번째 자리)/8
+GP10        DIG4 (마지막 자리)/6
+
+GP9         A/11
+GP8         B/7
+GP7         C/4
+GP6         D/2
+
+GP18        E/1
+GP19        F/10
+GP20        G/5
+GP21        DP/3
