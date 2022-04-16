@@ -41,12 +41,12 @@ segmap = {0:[1,1,1,1,1,1,0], 1:[0,1,1,0,0,0,0], 2:[1,1,0,1,1,0,1],\
 
 #define a function to display one number on 7segments unit
 def display_seg(num):
-    if num >= 0 and num < 10: #valid range
+    if num >= 0 and num < 16: #valid range
         mapinfo = segmap[num]
         for i in range(7):
             segLst[i].value(mapinfo[i])
     else:
-        mapinfo = segmap['E']
+        mapinfo = segmap[14]
         for i in range(7):
             segLst[i].value(mapinfo[i])
 
