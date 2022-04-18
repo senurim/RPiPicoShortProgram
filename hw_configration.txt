@@ -15,7 +15,6 @@ GP9         A/11
 GP8         B/7
 GP7         C/4
 GP6         D/2
-
 GP18        E/1
 GP19        F/10
 GP20        G/5
