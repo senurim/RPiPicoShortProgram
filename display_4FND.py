@@ -2,8 +2,11 @@
 #
 # try to control each segment on the target dig
 
-from machine import Pin, Timer
+from machine import Pin
+from machine import Timer
+from machine import RTC
 import time
+
 
 #define output pins and FND elements
 dig1 = Pin(13, Pin.OUT, value=1)  #initially turn off
@@ -31,11 +34,14 @@ segmap = {0:[1,1,1,1,1,1,0], 1:[0,1,1,0,0,0,0], 2:[1,1,0,1,1,0,1],\
           9:[1,1,1,1,0,1,1], 10:[1,1,1,0,1,1,1], 11:[0,0,1,1,1,1,1],\
           12:[1,0,0,1,1,1,0], 13:[0,1,1,1,1,0,1], 14:[1,0,0,1,1,1,1],\
           15:[1,0,0,0,1,1,1]}
+
 #global variables
 #display on flag
 displayOnState = False
 #time duration for dynamic driving
-displayRate = 30000  #unit micro sec
+displayRate = 5000  #unit micro sec, default = 5 msec
+
+
 
 #define a function to display one number on 7segments unit
 def displayNumber(num):
@@ -61,6 +67,7 @@ def displayDigitOne(digit, num):
         digitLst[digit].value(0)      #turn on the given digit
     else:
         print('Err: wrong digit')
+        return 
 
     displayNumber(num)
 
@@ -81,28 +88,64 @@ def turnoff4Fnd():
         for i in range(4):
             turnoffDigit(i)
     
-def displayFour(numbers):
+def onoffDP(digit, flag):
     '''
-    Display four numbers at 4 X FND by using dynamic driving method
-    parameter: numbers - tuple datatype containing 4 numbers
+    Turn on the given digit's DP (dot)
     '''
+    if digit >= 0 and digit <=3 :
+        digitLst[digit].value(0)      #turn on the given digit
+    else:
+        print('Err: wrong digit')
+        return 
+    
+    if flag:
+        segDP.value(1)
+    else:
+        segDP.value(0)
 
-    #check the given numbers
-    for itm in numbers:
-        if itm < 0 or itm > 15:
-            print('Err: given number is outof the valid range')
-            return
+# def displayFour(numbers):
+#     '''
+#     Display four numbers at 4 X FND by using dynamic driving method
+#     parameter: numbers - tuple datatype containing 4 numbers from left to right
+#     '''
 
-    global displayOnState
-    displayOnState = True
+#     #check the given numbers
+#     for itm in numbers:
+#         if itm < 0 or itm > 15:
+#             print('Err: given number is outof the valid range')
+#             return
 
-    digitcnt = 0
+#     global displayOnState
+#     displayOnState = True
 
-    #define a callback function
-    def dis_fnd_callback(numbers):
-        displayDigitOne(digitcnt, numbers[digitcnt])
-        digitcnt += 1
-        digitcnt %= 4
+#     digitcnt = 0
 
-    #initialize a timer for dynamic driving
-    fndtmr = Timer(period=displayRate, mode=Timer.PERIODIC, callback=dis_fnd_callbak)
+#     #define a callback function
+#     def dis_fnd_callback(numbers):
+#         displayDigitOne(digitcnt, numbers[digitcnt])
+#         digitcnt += 1
+#         digitcnt %= 4
+
+# #initialize a timer for dynamic driving
+# fndtmr = Timer(period=displayRate, mode=Timer.PERIODIC, callback=dis_fnd_callbak)
+
+if __name__ == '__main__':
+    #use RTC 
+    rtc = machine.RTC()
+    rtc.datetime([2022,4,19,2,17,25,0,0])
+    
+    #toggling 2nd seg's DP to display sec movement
+    
+    # tmr = Timer(freq=2, mode=Timer.PERIODIC, callback=lambda t: segDP.toggle())
+    # tmr.init()
+
+    
+    # while True:
+    #     nowts = rtc.datetime()
+    #     now_dis = [nowts[4]//10, nowts[4]%10, nowts[5]//10, nowts[5]%10 ]
+    #     # now_dis=[1,2,3,4]
+    #     for i in range(4):
+    #         displayDigitOne(i,now_dis[i])
+    #         time.sleep_us(displayRate)
+    #         turnoffDigit(i)
+        
