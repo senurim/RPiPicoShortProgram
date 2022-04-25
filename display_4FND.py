@@ -93,15 +93,16 @@ def onoffDP(digit, flag):
     Turn on the given digit's DP (dot)
     '''
     if digit >= 0 and digit <=3 :
-        digitLst[digit].value(0)      #turn on the given digit
+        if flag:
+            digitLst[digit].value(0)      #turn on the given digit
+            segDP.value(1)
+        else:
+             digitLst[digit].value(1)      #turn off the given digit
+             segDP.value(0)
     else:
         print('Err: wrong digit')
         return 
     
-    if flag:
-        segDP.value(1)
-    else:
-        segDP.value(0)
 
 # def displayFour(numbers):
 #     '''
@@ -132,11 +133,11 @@ def onoffDP(digit, flag):
 if __name__ == '__main__':
     #use RTC 
     rtc = machine.RTC()
-    rtc.datetime([2022,4,19,2,17,25,0,0])
+    rtc.datetime([2022,4,25,1,15,54,0,0])
     
     #toggling 2nd seg's DP to display sec movement
     
-    # tmr = Timer(freq=2, mode=Timer.PERIODIC, callback=lambda t: segDP.toggle())
+    tmr = Timer(freq=2, mode=Timer.PERIODIC, callback=lambda t: segDP.toggle())
     # tmr.init()
 
     
@@ -148,4 +149,11 @@ if __name__ == '__main__':
     #         displayDigitOne(i,now_dis[i])
     #         time.sleep_us(displayRate)
     #         turnoffDigit(i)
+
+    # DP 세그먼트 시험
+    # for i in range(4):
+    #     onoffDP(i, True)
+    #     time.sleep(0.5)
+    #     onoffDP(i, False)
+        
         
