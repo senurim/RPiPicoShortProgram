@@ -7,7 +7,10 @@ import time
 
 digitcnt = 0
 for i in range(16):
-    fnd.displayDigitOne(digitcnt,i)
+    if digitcnt %2 == 0:
+        fnd.displayDigitOne(digitcnt,i, True)
+    else: 
+        fnd.displayDigitOne(digitcnt,i, False)
     time.sleep(0.7)
     fnd.turnoffDigit(digitcnt)
     digitcnt += 1

@@ -60,6 +60,8 @@ def displayDigitOne(digit, num, dpOn=False):
 
     if dpOn:
         segDP.on()
+    else:
+        segDP.off()
 
 def turnoffDigit(digit):
     '''
