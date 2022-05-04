@@ -56,6 +56,18 @@
   [devicemart 블로그 (따라하기 좋은 문서)](https://devicemart.blogspot.com/2021/06/pc-python.html)
 - 보드 장착 LED 제어하는 코드
   ```python
-  led.on() # ON 하는 함수 , LED를 켬.
-  # 동일한 결과를 만드는 다른 방법 led.value(1)
+  led.on() # LED ON 하는 함수. GPIO Pin을 3.3V로 변경.
+  # 동일한 결과를 만드는 다른 방법: led.high(),  led.value(1)
+
+  led.off() # LED를 OFF하는 명령어, GPIO Pin 출력을 GND로 변경.
+  # 동일 효과:  led.low(), led.value(0)
+
+  led.toggle() #현 상태를 바꾸는 명령어
   ```
+  관련된 자세한 내용은 [참고문서](https://docs.micropython.org/en/latest/library/machine.Pin.html)를 보자.
+
+- `time.sleep()` 함수에 대한 도움말도 위 사이트의 [이 페이지](https://docs.micropython.org/en/latest/library/time.html?highlight=sleep#time.sleep)를 참조하자.
+  예제) `time.sleep(1)`: 1초 동안 아무 일도 안하고 기다림.
+        `time.sleep(0.1)`와 같이 부동소수점 인자로 시간을 설정함. 
+        
+  보다 작은 단위 시간을 사용하는 것도 `time.sleep_ms(ms)` (milisecond 단위로 지정), `time.sleep_us(us)` (micro second 단위로 지정) 함수도 존재
