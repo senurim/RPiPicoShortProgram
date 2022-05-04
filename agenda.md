@@ -48,4 +48,14 @@
 5. 4자리수 카운터 만들기
 
 
-     
+### 각 실습별 도움 사이트들
+위 실습 순서에 기재된 단계를 수행하는데 도움이 되는 사이트/문서를 정리합니다.
+
+- 1 & 2 단계 : 피코 보드 Micro Pythn 개발 환경  만들기
+  
+  [devicemart 블로그 (따라하기 좋은 문서)](https://devicemart.blogspot.com/2021/06/pc-python.html)
+- 보드 장착 LED 제어하는 코드
+  ```python
+  led.on() # ON 하는 함수 , LED를 켬.
+  # 동일한 결과를 만드는 다른 방법 led.value(1)
+  ```
