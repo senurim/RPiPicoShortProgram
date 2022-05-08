@@ -147,4 +147,17 @@ dig1.on()  # 혹은 digitLst[0].value(1)
     - 4개 7세그먼트의 a~dp(8개) 핀을 모두 동일한 8개 출력 핀에 연결, 공통 단자를 별도 출력 핀에 연결하여 전체 ON/OFF 제어  8+4=12개의 출력 필요
     - 깜박이지 않으며 적당한 밝기로 보이도록 적절한 인터벌 설정 필요.
 
+다이나믹 구동 방법을 프로그램으로 만드는 방법은 매우 간단하다. 표시하고자 하는 모듈(digit/디짓, 8세그먼트 묶음)을 순서대로 일정시간 (수 msec) 동안 ON시키며 표시하고자 하는 정보(숫자)를 표시하면 된다.   
+예제 파이썬 코드
+```python
+while True:
+    dis_data = [1, 2, 3, 4]
+    
+    for i in range(4):
+        displayDigitOne(i,dis_data[i])   #i번째 digit에 첫번째 데이터 표시
+        time.sleep_us(displayRate)  #일정 시간 기다림
+        turnoffDigit(i)  # 현재 디짓 turn off
+```
+#### *실습하기*
+주어진 4개 숫자를 표시하는 프로그램을 작성하자.
 
