@@ -133,7 +133,7 @@ def onoffDP(digit, flag):
 if __name__ == '__main__':
     #use RTC 
     rtc = machine.RTC()
-    rtc.datetime([2022,4,25,1,15,54,0,0])
+    rtc.datetime([2022,5,9,1,18,50,0,0])
     
     #toggling 2nd seg's DP to display sec movement
     
@@ -141,14 +141,14 @@ if __name__ == '__main__':
     # tmr.init()
 
     
-    # while True:
-    #     nowts = rtc.datetime()
-    #     now_dis = [nowts[4]//10, nowts[4]%10, nowts[5]//10, nowts[5]%10 ]
-    #     # now_dis=[1,2,3,4]
-    #     for i in range(4):
-    #         displayDigitOne(i,now_dis[i])
-    #         time.sleep_us(displayRate)
-    #         turnoffDigit(i)
+    while True:
+        nowts = rtc.datetime()
+        now_dis = [nowts[4]//10, nowts[4]%10, nowts[5]//10, nowts[5]%10 ]
+        # now_dis=[1,2,3,4]
+        for i in range(4):
+            displayDigitOne(i,now_dis[i])
+            time.sleep_us(displayRate)
+            turnoffDigit(i)
 
     # DP 세그먼트 시험
     # for i in range(4):
