@@ -31,6 +31,13 @@ segmap = {0:[1,1,1,1,1,1,0], 1:[0,1,1,0,0,0,0], 2:[1,1,0,1,1,0,1],\
           12:[1,0,0,1,1,1,0], 13:[0,1,1,1,1,0,1], 14:[1,0,0,1,1,1,1],\
           15:[1,0,0,0,1,1,1]}
 
+#global variables
+#display on flag
+displayOnState = False
+#time duration for dynamic driving
+displayRate = 5000  #unit micro sec, default = 5 msec
+
+
 #define a function to display one number on 7segments unit
 def displayNumber(num):
     '''
@@ -69,3 +76,29 @@ def turnoffDigit(digit):
     -parameter: digit - 1 ~ 4 (left to right)
     '''
     digitLst[digit].value(1)
+
+def turnoff4Fnd():
+    '''
+    Turn off the 4 digits 7 segments
+    '''
+    global displayOnState
+    if displayOnState:
+        displayOnState = False
+        for i in range(4):
+            turnoffDigit(i)
+    
+def onoffDP(digit, flag):
+    '''
+    Turn on the given digit's DP (dot)
+    '''
+    if digit >= 0 and digit <=3 :
+        if flag:
+            digitLst[digit].value(0)      #turn on the given digit
+            segDP.value(1)
+        else:
+             digitLst[digit].value(1)      #turn off the given digit
+             segDP.value(0)
+    else:
+        print('Err: wrong digit')
+        return 
+    
