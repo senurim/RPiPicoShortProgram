@@ -73,7 +73,7 @@ def displayDigitOne(digit, num, dpOn=False):
 def turnoffDigit(digit):
     '''
     Turn off the given digit segment
-    -parameter: digit - 1 ~ 4 (left to right)
+    -parameter: digit - 0 ~ 3 (left to right)
     '''
     digitLst[digit].value(1)
 
