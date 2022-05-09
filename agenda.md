@@ -15,11 +15,11 @@
     - RP2를 위한 Micro Python 사용 환경 관련 [안내서](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf)
 
 3. Micro Python 사용 환경 만들기 실습
- - [따라하며 설치하기](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
+ - 라즈베리파이 공식 문서 [안내서](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
 4. 보드 위 LED 제어하기 실습
 5. 외부 LED 및 세그먼트 제어하기 실습
-6. 스위치 사용 실습
-7. 1자리수 카운터 만들기 실습
+6. 스위치 사용 실습  
+*7. 4자리수 카운터 만들기 실습 (시간이 되는 경우에만 진행)*
 
 ---
 
