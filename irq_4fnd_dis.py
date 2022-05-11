@@ -39,7 +39,7 @@ def halfsec_cb(halfsectmr):
     dotFlag[1] = not dotFlag[1]
         
 
-displayNumber = [1,2,3,4]
+displayNumber = [1,2,16, 4] #16 means blank..
 
 #run timers
 dd_tmr=Timer(period=5, mode=Timer.PERIODIC, callback=dd_cb)
