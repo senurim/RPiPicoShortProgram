@@ -24,12 +24,9 @@ segDP=Pin(21,Pin.OUT)
 segLst=[segA, segB, segC, segD, segE, segF, segG]
 
 # 0~9 mapping table
-segmap = {0:[1,1,1,1,1,1,0], 1:[0,1,1,0,0,0,0], 2:[1,1,0,1,1,0,1],\
-          3:[1,1,1,1,0,0,1], 4:[0,1,1,0,0,1,1], 5:[1,0,1,1,0,1,1],\
-          6:[1,0,1,1,1,1,1], 7:[1,1,1,0,0,0,0], 8:[1,1,1,1,1,1,1],\
-          9:[1,1,1,1,0,1,1], 10:[1,1,1,0,1,1,1], 11:[0,0,1,1,1,1,1],\
-          12:[1,0,0,1,1,1,0], 13:[0,1,1,1,1,0,1], 14:[1,0,0,1,1,1,1],\
-          15:[1,0,0,0,1,1,1]}
+segmap = [ [1,1,1,1,1,1,0], [0,1,1,0,0,0,0], [1,1,0,1,1,0,1], [1,1,1,1,0,0,1], [0,1,1,0,0,1,1], [1,0,1,1,0,1,1],\
+          [1,0,1,1,1,1,1], [1,1,1,0,0,0,0], [1,1,1,1,1,1,1], [1,1,1,1,0,1,1], [1,1,1,0,1,1,1], [0,0,1,1,1,1,1],\
+          [1,0,0,1,1,1,0], [0,1,1,1,1,0,1], [1,0,0,1,1,1,1], [1,0,0,0,1,1,1], [0,0,0,0,0,0,0] ]
 
 #global variables
 #display on flag
@@ -42,16 +39,15 @@ displayRate = 5000  #unit micro sec, default = 5 msec
 def displayNumber(num):
     '''
     Display one number at one 7 segment
-    parameter: num - 0 ~ 15 integer number to be displayed
+    parameter: num - 0 ~ 15 integer number to be displayed, and ' '(space character) for blank(empty)
     '''
-    if num >= 0 and num < 16: #check the valid range
+    if num >= 0 and num <= 16: #check the valid range
         mapinfo = segmap[num]
         for i in range(7):
             segLst[i].value(mapinfo[i])
     else:
-        mapinfo = segmap[14]
-        for i in range(7):
-            segLst[i].value(mapinfo[i])
+        print('Err:out of range in displayed number')
+        return -1
 
 def displayDigitOne(digit, num, dpOn=False):
     '''
@@ -61,7 +57,8 @@ def displayDigitOne(digit, num, dpOn=False):
     if digit >= 0 and digit <=3 :
         digitLst[digit].value(0)      #turn on the given digit
     else:
-        print('Err: wrong digit')
+        print('Err: out of range for digit')
+        return -1
 
     displayNumber(num)
 
