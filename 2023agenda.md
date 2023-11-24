@@ -20,7 +20,6 @@
 5. 보드 위 LED 제어하기 실습
 6. 외부 LED 및 세그먼트 제어하기 실습
 7. 스위치 사용 실습  
-*7. 4자리수 카운터 만들기 실습 (시간이 되는 경우에만 진행)*
 
 ---
 
@@ -60,11 +59,11 @@ while True: #무한루프
 
 5. 확장보드 LED 제어하기
     1. 확장보드에는 4개의 청색 LED가 장차되어 있음
-    2. 이 4개 LED의 음극(cathode)은 GND에 연결되어 있고 양극(anode)은 피코 보드의 GP0~GP3까지 연결되어 있음
+    2. 이 4개 LED의 음극(cathode)은 GND에 연결되어 있고, 1번 스텝을 통해 양극(anode)은 피코 보드의 GP0~GP3까지 연결되어 있음
     3. 이 4개 LED를 이용하여 4비트 2진수를 표시하는 디스플레이로 활용 가능
     즉, 0(0b0000) ~ 15(0b1111) 16개 수를 표시할 수 있음
 
-* 0부터 15까지의 2진수를 표시하는 디스플레이 만들기
+ < 0부터 15까지의 2진수를 표시하는 디스플레이 만들기 >
 ```python
 # simulate the 4-bit counter by using the 4 LEDs on the board
 #
@@ -91,17 +90,75 @@ while True:
             else:
                 counter[j].off()
         time.sleep(0.5)
-
 ```
-6. 버튼 스위치 사용하기
-   1. 관련 내용 강의
-      - 푸시 버튼 스위치 관련 자료 [코코아팹 자료](https://kocoafab.cc/learn/2)
-      - 풀업/풀다운 회로 관련 자료 [위키독스 MSP430](https://wikidocs.net/28690)
-      - Contact bounce (also called *chatter*) [Wikipedia](https://en.wikipedia.org/wiki/Switch#Contact_bounce)
-      - [Debouncing (채터링 회피 방법) 설명](#푸시-버튼-스위치-채터링-방지-방법-debouncing)
-   2. 스위치 2개 보드 연결하기 (이미 연결되어 있음)
-   3. 프로그램 만들기
-      - 스위치 상태 읽어오기
-      - 스위치 디바운싱(debouncing) 기법 적용하기
-      - 간단 카운터 만들기
+
+6. 푸시버튼 스위치 (push button switch) 사용하기
+    1. 관련 내용 강의
+       - 푸시 버튼 스위치 관련 자료 [코코아팹 자료](https://kocoafab.cc/learn/2)
+       - 풀업/풀다운 회로 관련 자료 [위키독스 MSP430](https://wikidocs.net/28690)
+       
+    1. 스위치 2개 보드 연결하기 (이미 연결되어 있음)
+    1. 프로그램 만들기
+       - 스위치 상태 읽어오기
+          * [프로그램 1](#프로그램_1)을 실행시키면서 스위치를 눌렸을 때와 그렇지 않을 때의 값을 관측하자.
+       - 2개 스위치를 사용하여 `UP-DOWN COUNTER`를 만들어 보자 ([프로그램 2](프로그램_2))
+          * 스위치 `K3`를 누르면 값이 증가하고 `K4`를 누르면 감소함
+          * 현재 값은 4bit display에 표시함 (즉 0~15의 숫자만 표시 가능)    
+       - 실행해보고 문제점을 찾아보자
+          * 정상적으로 동작하는가? 
+          * 어떤 문제가 발생하는가?
+       - 스위치 입력 문제 원인 및 해결 방법
+          * 증상: 스위치를 한 번 눌렀는데 이상한 숫자가 나옴 
+          * 원인: 0.1초의 딜레이가 있음에도 사람이 스위치를 누르고 있는 동안 여러번 루프가 돌아 cntval 값이 증가/감소하기 때문..
+       - [디바운싱(debouncing) 기법 적용하기](./debouncing.md)
+       - 지금까지 배운 기법들을 이용하여 정상적으로 동작하는 카운터 만들기
+
+#### 프로그램 1
+```python
+# 2개 스위치가 GP6과 GP7에 연결되어 있음
+# 이 스위치를 입력기능으로 설정한 GP6/7에 내부 풀업(pull-up) 기능 활성화하여 사용
+upsw = Pin(6, Pin.IN, Pin.PULL_UP)
+dnsw = Pin(7, Pin.IN, Pin.PULL_UP)
+while True: #0.5초 간격으로 읽어 표시함
+    print(upsw.value())
+    time.sleep_ms(500)  
+```
+
+#### 프로그램 2
+```python
+#앞에 필요한 것들은 위 코드를 참고하여 잘 넣을 것
+
+display4bit=[led3,led2,led1,led0]
+
+#4비트 이진 디스플레이를 함수로 만듬
+#function for 4bit display
+def display(value):
+    # masking 4bits
+    value &= 0x0F
+    for j in range(4):
+        if (value>>j) % 2 == 1:
+            display4bit[j].on()
+        else:
+            display4bit[j].off()
+
+cntval = 0
+
+while True:
+    upsw_val1 = upsw.value()
+    dnsw_val1 = dnsw.value()
+    
+    #check if it is pushed
+    if upsw_val1 == 0:
+        cntval += 1
+        if cntval > 15:
+            cntval = 0
+    if dnsw_val1 == 0:
+        cntval -= 1
+        if cntval < 0:
+            cntval = 15
+            
+    #display the current value
+    display(cntval)
+    time.sleep(0.1)
+```
 
