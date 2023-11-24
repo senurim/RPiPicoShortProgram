@@ -1,4 +1,4 @@
-# small web server to display the 4bit number
+# small web server to control one LED (GP0)
 #
 # 2023.11.24
 
