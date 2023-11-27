@@ -13,13 +13,14 @@
 3. 소프트웨어 개발 환경 소개
    - C/C++을 사용하여 소프트웨어를 개발하는 방법: [The C/C++ SDK](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html#sdk-setup)
    - 파이썬 언어를 사용하는 방법
-   - [Micro Python 소개](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#what-is-micropython)
+     - [Micro Python 소개](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#what-is-micropython)
 
 4. Micro Python 사용 환경 만들기 실습
    - 라즈베리파이 공식 문서 [안내서](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
-5. 보드 위 LED 제어하기 실습
-6. 외부 LED 및 세그먼트 제어하기 실습
-7. 스위치 사용 실습  
+5. 보드 위 LED 및 외부 LED 제어하기 실습
+6. 스위치 사용 실습
+7. 4bit up-down counter 만들기
+8. 간단한 웹 서버를 구축하여 숫자 표시하기 실습
 
 ---
 
@@ -92,7 +93,7 @@ while True:
         time.sleep(0.5)
 ```
 
-6. 푸시버튼 스위치 (push button switch) 사용하기
+6. 푸시버튼 스위치 (push button switch) 사용하여 4bit up-down counter 만들기
     1. 관련 내용 강의
        - 푸시 버튼 스위치 관련 자료 [코코아팹 자료](https://kocoafab.cc/learn/2)
        - 풀업/풀다운 회로 관련 자료 [위키독스 MSP430](https://wikidocs.net/28690)
@@ -162,3 +163,4 @@ while True:
     time.sleep(0.1)
 ```
 
+7. 
