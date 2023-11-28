@@ -13,13 +13,14 @@
 3. 소프트웨어 개발 환경 소개
    - C/C++을 사용하여 소프트웨어를 개발하는 방법: [The C/C++ SDK](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html#sdk-setup)
    - 파이썬 언어를 사용하는 방법
-   - [Micro Python 소개](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#what-is-micropython)
+     - [Micro Python 소개](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#what-is-micropython)
 
 4. Micro Python 사용 환경 만들기 실습
    - 라즈베리파이 공식 문서 [안내서](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
-5. 보드 위 LED 제어하기 실습
-6. 외부 LED 및 세그먼트 제어하기 실습
-7. 스위치 사용 실습  
+5. 보드 위 LED 및 외부 LED 제어하기 실습
+6. 스위치 사용 실습
+7. 4bit up-down counter 만들기
+8. 간단한 웹 서버를 구축하여 숫자 표시하기 실습
 
 ---
 
@@ -92,7 +93,7 @@ while True:
         time.sleep(0.5)
 ```
 
-6. 푸시버튼 스위치 (push button switch) 사용하기
+6. 푸시버튼 스위치 (push button switch) 사용하여 4bit up-down counter 만들기
     1. 관련 내용 강의
        - 푸시 버튼 스위치 관련 자료 [코코아팹 자료](https://kocoafab.cc/learn/2)
        - 풀업/풀다운 회로 관련 자료 [위키독스 MSP430](https://wikidocs.net/28690)
@@ -152,13 +153,74 @@ while True:
         cntval += 1
         if cntval > 15:
             cntval = 0
-    if dnsw_val1 == 0:
-        cntval -= 1
-        if cntval < 0:
-            cntval = 15
             
     #display the current value
     display(cntval)
     time.sleep(0.1)
 ```
+
+7. 간단한 웹 서버 만들어서 숫자 표시하기 실습
+피코 W 모델의 경우 피코 모델과 달리 새롭게 무선랜(WiFi 2.4GHz) 기능 및 블루투스 기능을 수행하는 모듈(Infineon CYW43439)을 장착하여 다음 무선 통신 기능을 제공한다.
+* Wireless (802.11n), single-band (2.4 GHz)
+* WPA3
+* Soft access point supporting up to four clients
+* Bluetooth 5.2
+  * Support for Bluetooth LE Central and Peripheral roles
+  * Support for Bluetooth Classic
+
+안테나의 경우 보드에 장착(onboard antenna) 되어 있고, 이 모듈과 RP2040과는 SPI 인터페이스로 연결되어 있다.
+보다 자세한 내용은 [Hardware design with RP2040](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf) 문서를 참고하자.
+
+피코W 보드를 이용하여 무선랜이나 블루투스 기능을 이용하는 방법에 대해서는 [Connecting to the Internet with Raspberry Pi Pico W](https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf) 문서에 자세히 설명되어 있다.
+
+본 실습에서는 `socket` 모듈을 이용하여 간단한 웹서버를 만들고 클라이언트가 요청한 숫자를 표시하는 기능을 만들어 보자.
+
+이 기능을 위한 전체 프로그램은 이 레포지토리의 `pico_w` 디렉토리 아래에 `tiny_webserver_display.py` file을 이용하자. ([파일 링크](https://github.com/senurim/RPiPicoShortProgram/blob/main/pico_w/tiny_webserver_display.py))
+
+코드의 간단할 설명은 다음과 같다.
+```python
+#WLAN 기능을 사용하기 위해서는 아래 모듈 필요
+#보다 자세한 설명은 Micropython의 network module document를 참조할 것
+# https://docs.micropython.org/en/latest/library/network.html#module-network
+# class WLAN - WiFi network 을 지원하기 위한 클래스
+import network
+
+wlan = network.WLAN(network.STA_IF) #AP에 클라이언트로 기능
+wlan.active(True) 
+wlan.connect(ssid, password) 
+
+# Wait for connect or fail
+#
+#// Return value of cyw43_wifi_link_status
+# define CYW43_LINK_DOWN (0)
+# define CYW43_LINK_JOIN (1)
+# define CYW43_LINK_NOIP (2)
+# define CYW43_LINK_UP (3)
+# define CYW43_LINK_FAIL (-1)
+# define CYW43_LINK_NONET (-2)
+# define CYW43_LINK_BADAUTH (-3)
+
+max_wait = 10
+while max_wait > 0:
+    if wlan.status() < 0 or wlan.status() >= 3:
+        break
+    max_wait -= 1
+    print('waiting for connection...')
+    time.sleep(1)
+
+# Handle connection error
+if wlan.status() != 3:
+    raise RuntimeError('network connection failed')
+else:
+
+    print('connected')
+    # WLAN.ifconfig([(ip, subnet, gateway, dns)])
+    # Get/set IP-level network
+    status = wlan.ifconfig()
+    print( 'ip = ' + status[0] )
+    time.sleep(0.1)
+
+```
+
+모든 명령어가 에러 없이 실행되면 WiFi 무선랜 네트워크에 현재 피코 보드가 클라이언트로 연결이 된다.
 
