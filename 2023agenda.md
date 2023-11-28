@@ -177,7 +177,7 @@ while True:
 
 이 기능을 위한 전체 프로그램은 이 레포지토리의 `pico_w` 디렉토리 아래에 `tiny_webserver_display.py` file을 이용하자. ([파일 링크](https://github.com/senurim/RPiPicoShortProgram/blob/main/pico_w/tiny_webserver_display.py))
 
-코드의 간단할 설명은 다음과 같다.
+코드의 간단한 설명은 다음과 같다.
 ```python
 #WLAN 기능을 사용하기 위해서는 아래 모듈 필요
 #보다 자세한 설명은 Micropython의 network module document를 참조할 것
@@ -222,10 +222,10 @@ else:
 
 ```
 
-모든 명령어가 에러 없이 실행되면 WiFi 무선랜 네트워크에 현재 피코 보드가 클라이언트로 연결이 된다. 
-다음으로 소켓(socket)을 이용하여 서버로 동작할 수 있도록 설정한다. 
-socket programming에 대해서는 인터넷에서 쉽게 찾을 수 있는 여러 문서들\ (이 중 [하나](https://tyrionlife.tistory.com/781))을 참고하여 이해하자.
-아래 코드는 전형적인 소켓 서버의 기능을 수행하도록 씌여졌다.
+* 모든 명령어가 에러 없이 실행되면 WiFi 무선랜 네트워크에 현재 피코 보드가 클라이언트로 연결이 된다. 
+* 다음으로 소켓(socket)을 이용하여 서버로 동작할 수 있도록 설정한다. 
+* socket programming에 대해서는 인터넷에서 쉽게 찾을 수 있는 여러 문서들\ (이 중 [하나](https://tyrionlife.tistory.com/781))을 참고하여 이해하자.
+* 아래 코드는 전형적인 소켓 서버의 기능을 수행하도록 씌여졌다.
 
 ```python
 # 생략..
@@ -262,7 +262,9 @@ github로부터 완성된 프로그램을 다운로드 받아 `Thonny`를 이용
 
 실행이 되면 무선랜에 접속 후 소켓을 만들고 요청을 기다리는 상태가 된다. (출력 창에 `listening on` 메세지를 출력하고 정지함)
 이 상태에서 가지고 있는 스마트폰이나 노트북에서 웹브라우저를 열고 자기 피코 보드의 ip address를 이용하여 아래 주소처럼 접속해보자.
+
 `http://192.168.10.xxx/display/f`
+
 모든 것이 정상이라면 확장보드의 4개 LED가 모두 켜질 것이다. (f -> 15 -> 0b1111)
 마지막 숫자를 0~15의 값을 16진수 형태로 변경하며 시험해보자.
 
