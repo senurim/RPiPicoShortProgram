@@ -7,3 +7,8 @@
  - 장소: 한림대 공학관 1215호
  - 내용: 강의와 실습을 병행하며 라즈베리파이의 [피코](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html) 보드와 [MicroPython](https://micropython.org/)을 이용하여 기초적인 임베디드 시스템을 만드는 방법을 배운다.
  - 실습을 위해 자신의 노트북 지참 필요.
+
+### 2차 특강 진행함
+ - 일시: 2023.11.29 18:30- 20:00
+ - 장소: 공학관 1145호
+ - 1차와 달라진 점: 피코 보드가 아니라 네트워크 기능을 갖춘 피코W 보드 이용
