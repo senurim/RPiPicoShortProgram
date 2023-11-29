@@ -16,8 +16,8 @@ led1=Pin(1, Pin.OUT)
 led2=Pin(2, Pin.OUT)
 led3=Pin(3, Pin.OUT)
  
-ssid = 'Sangsangwoorim2.4'
-password = 'Lee0927#'
+ssid = 'xxx'
+password = 'xxxx'
 
 #display part
 display4bit=[led3,led2,led1,led0]
