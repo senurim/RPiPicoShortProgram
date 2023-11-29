@@ -10,8 +10,8 @@ from machine import Pin
  
 led = Pin(0, Pin.OUT)
  
-ssid = 'Sangsangwoorim2.4'
-password = 'Lee0927#'
+ssid = 'xxxx'
+password = 'xxx'
 
 wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
